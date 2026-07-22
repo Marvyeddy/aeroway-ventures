@@ -5,8 +5,13 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "alembic>=1.18.5",
     "asyncpg>=0.31.0",
     "fastapi[standard]>=0.139.2",
+    "passlib[argon2]>=1.7.4",
+    "pyjwt>=2.13.0",
+    "redis>=8.0.1",
+    "sqlmodel>=0.0.39",
 ]
 
 [dependency-groups]
