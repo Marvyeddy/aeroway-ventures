@@ -1,4 +1,5 @@
 from datetime import datetime, timedelta, timezone
+from fastapi import HTTPException, status
 from passlib.context import CryptContext
 import jwt
 from backend.utils.config import Config as cfg
@@ -34,3 +35,19 @@ def create_session_token(data: dict):
 
 def create_refresh_token(data: dict):
     return create_token(data=data, token_type="refresh", expiry=REFRESH_TOKEN_EXP)
+
+
+def decode_token(token: str):
+    try:
+        decoded_token = jwt.decode(
+            token, key=cfg.JWT_SECRET_KEY, algorithms=[cfg.JWT_ALG]
+        )
+        return decoded_token
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired."
+        )
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token."
+        )
