@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+from backend.routes.flights import flight_router
 from backend.routes.users import user_router
 
 version = "v1"
@@ -19,3 +20,4 @@ async def root():
 
 
 app.include_router(user_router, prefix=f"/api/{version}/users", tags=["users"])
+app.include_router(flight_router, prefix=f"/api/{version}/flights", tags=["flights"])

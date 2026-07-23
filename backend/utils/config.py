@@ -18,6 +18,9 @@ class Settings(BaseSettings):
     MAIL_SERVER: str
     MAIL_FROM: str
     MAIL_FROM_NAME: str
+    AMADEUS_API_KEY: str
+    AMADEUS_API_SECRET: str
+    AMADEUS_BASE_URL: str
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE, env_file_encoding="utf-8", extra="ignore"

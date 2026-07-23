@@ -10,6 +10,9 @@ services:
     depends_on:
       - db
       - redis
+    volumes:
+      - .:/backend
+      - /backend/.venv
   db:
     image: postgres:17
     restart: always
