@@ -1,10 +1,19 @@
 from typing import Annotated
-from fastapi import APIRouter, Cookie, Depends, HTTPException, Header, status
+from fastapi import (
+    APIRouter,
+    BackgroundTasks,
+    Cookie,
+    Depends,
+    HTTPException,
+    Header,
+    status,
+)
 from fastapi.responses import JSONResponse
 from sqlmodel.ext.asyncio.session import AsyncSession
 
 from backend.db.blocklist import add_jwt_to_blocklist, token_in_blocklist
 from backend.db.database import get_session
+from backend.external.email import send_email
 from backend.schemas.users import UserIn, UserRead
 from backend.services.users import UserService
 from backend.utils.security import (
@@ -24,7 +33,11 @@ REFRESH_TOKEN_EXP = 24 * 2 * 60 * 60  # 2days
 @user_router.post(
     "/create", response_model=UserRead, status_code=status.HTTP_201_CREATED
 )
-async def signup_user(user_data: UserIn, session: AsyncSession = Depends(get_session)):
+async def signup_user(
+    background_tasks: BackgroundTasks,
+    user_data: UserIn,
+    session: AsyncSession = Depends(get_session),
+):
     # check is user exists
     user_dict = user_data.model_dump()
     user_exists = await user_service.get_user_by_email(user_dict["email"], session)
@@ -35,6 +48,22 @@ async def signup_user(user_data: UserIn, session: AsyncSession = Depends(get_ses
         )
 
     user = await user_service.create_user(user_data, session)
+
+    subject = "Welcome to Aeroway Ventures"
+    recipients = [user.email]
+    body_text = "Thank you for signing up with Aeroway Ventures! We're excited to have you on board."
+
+    background_tasks.add_task(
+        send_email,
+        subject,
+        recipients,
+        "welcome.html",
+        {
+            "subject": subject,
+            "body_text": body_text,
+            "app_name": "Aeroway Ventures",
+        },
+    )
 
     return user
 
