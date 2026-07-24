@@ -7,7 +7,7 @@ r = aioredis.from_url(url=cfg.REDIS_URL, decode_responses=True)
 
 
 async def add_jwt_to_blocklist(jwt: str, expiry: int = SESSION_TOKEN_EXP) -> None:
-    return await r.set(name=jwt, value=" ", ex=expiry)
+    return await r.set(name=jwt, value=" ", ex=expiry, nx=True)
 
 
 async def token_in_blocklist(jwt: str) -> bool:

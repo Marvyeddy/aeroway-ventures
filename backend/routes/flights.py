@@ -1,6 +1,7 @@
 from typing import Annotated
 from amadeus import ClientError, NotFoundError
 from fastapi import APIRouter, Depends, HTTPException, Path, Query
+from backend.db.caching import redis_cache
 from backend.dependencies import get_current_user
 from backend.external.flights import amadeus_flight_service
 from backend.schemas.flight_order import FlightOrderRequestBody
@@ -22,10 +23,14 @@ flight_router = APIRouter()
 async def search_flights(request: FlightSearchRequestPost):
     try:
         request_body = request.model_dump()
+        key = f"flights: {'_'.join(request_body.keys())}"
+        flight_data = redis_cache.get(key)
 
-        # TO DO: Search in cache first (REDIS)
+        if flight_data:
+            return flight_data
 
         response = amadeus_flight_service.search_flights(request_body)
+        redis_cache.set(key, response)
         return response
 
     except ValueError as e:
