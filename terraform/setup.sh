@@ -26,7 +26,7 @@ AMADEUS_API_SECRET=${amadeus_api_secret}
 AMADEUS_BASE_URL=${amadeus_base_url}
 JWT_SECRET_KEY=${jwt_secret_key}
 JWT_ALG=${jwt_alg}
-EOF 
+EOF
 cd "$APP_DIR/backend"
 docker compose -f compose.yml up -d --build
 sleep 15
