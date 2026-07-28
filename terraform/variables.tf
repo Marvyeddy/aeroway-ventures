@@ -73,6 +73,7 @@ variable "amadeus_api_secret" {
 variable "amadeus_base_url" {
   description = "Base URL for Amadeus API."
   type        = string
+  sensitive   = true
 }
 
 variable "jwt_secret_key" {
