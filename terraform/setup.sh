@@ -27,6 +27,6 @@ JWT_SECRET_KEY=${jwt_secret_key}
 JWT_ALG=${jwt_alg}
 EOF 
 cd aeroway_ventures/backend
-docker compose up -d --build
+docker-compose -f compose.yml up -d --build
 
 fi

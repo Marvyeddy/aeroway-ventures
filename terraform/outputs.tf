@@ -9,5 +9,5 @@ output "ec2_public_ip" {
 
 output "application_url" {
   description = "URL to access the deployed application on the EC2 instance"
-  value       = "http://${aws_instance.app_server.public_ip}/8000"
+  value       = "http://${aws_instance.app_server.public_ip}:8000"
 }

@@ -17,8 +17,6 @@ services:
     image: postgres:17
     restart: always
     container_name: postgres-db
-    profiles:
-      - local
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
