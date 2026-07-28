@@ -30,17 +30,17 @@ jobs:
                 cat << 'EOF' > terraform/terraform.tfvars
                   repo_url           = "${{ secrets.REPO_URL }}"
                   gh_pat             = "${{ secrets.GH_PAT }}"
-                  MAIL_USERNAME      = "${{ secrets.MAIL_USERNAME }}"
-                  MAIL_PASSWORD      = "${{ secrets.MAIL_PASSWORD }}"
-                  MAIL_PORT          = "${{ secrets.MAIL_PORT }}"
-                  MAIL_SERVER        = "${{ secrets.MAIL_SERVER }}"
-                  MAIL_FROM_NAME     = "${{ secrets.MAIL_FROM_NAME }}"
-                  MAIL_FROM          = "${{ secrets.MAIL_FROM }}"
-                  AMADEUS_API_KEY    = "${{ secrets.AMADEUS_API_KEY }}"
-                  AMADEUS_API_SECRET = "${{ secrets.AMADEUS_API_SECRET }}"
-                  AMADEUS_BASE_URL   = "${{ secrets.AMADEUS_BASE_URL }}"
-                  JWT_SECRET_KEY     = "${{ secrets.JWT_SECRET_KEY }}"
-                  JWT_ALG            = "${{ secrets.JWT_ALG }}"
+                  mail_username      = "${{ secrets.MAIL_USERNAME }}"
+                  mail_password      = "${{ secrets.MAIL_PASSWORD }}"
+                  mail_port          = "${{ secrets.MAIL_PORT }}"
+                  mail_server        = "${{ secrets.MAIL_SERVER }}"
+                  mail_from_name     = "${{ secrets.MAIL_FROM_NAME }}"
+                  mail_from          = "${{ secrets.MAIL_FROM }}"
+                  amadeus_api_key    = "${{ secrets.AMADEUS_API_KEY }}"
+                  amadeus_api_secret = "${{ secrets.AMADEUS_API_SECRET }}"
+                  amadeus_base_url   = "${{ secrets.AMADEUS_BASE_URL }}"
+                  jwt_secret_key     = "${{ secrets.JWT_SECRET_KEY }}"
+                  jwt_alg            = "${{ secrets.JWT_ALG }}"
                 EOF
             - name: Plan Terraform
               run: terraform -chdir=terraform plan -out=tfplan

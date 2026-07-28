@@ -5,7 +5,7 @@ set -ex
 apt-get update -y
 apt-get install -y docker.io docker-compose git
 
-usermod -aG docker ${whoami} 
+usermod -aG docker ubuntu
 
 systemctl start docker
 systemctl enable docker
