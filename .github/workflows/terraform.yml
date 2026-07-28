@@ -27,7 +27,7 @@ jobs:
               run: terraform -chdir=terraform validate
             - name: Create terraform tfvars
               run: |
-                cat << 'EOF' > terraform/terraform.tfvars
+                cat << EOF > terraform/terraform.tfvars
                   repo_url           = "${{ github.repository }}"
                   gh_pat             = "${{ secrets.GH_PAT }}"
                   mail_username      = "${{ secrets.MAIL_USERNAME }}"

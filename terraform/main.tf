@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "eu-north-1"
+  region = "us-east-2"
 }
 
 data "aws_ami" "ubuntu" {
@@ -18,8 +18,9 @@ data "aws_vpc" "default" {
 }
 
 resource "aws_instance" "app_server" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = var.instance_type
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.instance_type
+  user_data_replace_on_change = true
   user_data = templatefile("./setup.sh", {
     repo_url           = var.repo_url,
     gh_pat             = var.gh_pat,
