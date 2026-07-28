@@ -15,4 +15,4 @@ RUN chmod +x entrypoint.sh
 RUN uv sync --frozen --no-cache --no-dev
 
 # Run the application.
-CMD ["./entrypoint.sh"]
+CMD ["bash", "./entrypoint.sh"]
