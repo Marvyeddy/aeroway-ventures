@@ -20,14 +20,13 @@ jobs:
                 aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
             - name: Setup terraform
               uses: hashicorp/setup-terraform@v4
-              
             - name: Terraform init
               run: terraform -chdir=terraform init
             - name: Validate terraform
               run: terraform -chdir=terraform validate
             - name: Create terraform tfvars
               run: |
-                cat << EOF > terraform/terraform.tfvars
+                cat <<EOF > terraform/terraform.tfvars
                   repo_url           = "${{ github.repository }}"
                   gh_pat             = "${{ secrets.GH_PAT }}"
                   mail_username      = "${{ secrets.MAIL_USERNAME }}"

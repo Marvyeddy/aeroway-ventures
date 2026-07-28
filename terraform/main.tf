@@ -17,33 +17,6 @@ data "aws_vpc" "default" {
   default = true
 }
 
-resource "aws_instance" "app_server" {
-  ami                         = data.aws_ami.ubuntu.id
-  instance_type               = var.instance_type
-  user_data_replace_on_change = true
-  user_data = templatefile("./setup.sh", {
-    repo_url           = var.repo_url,
-    gh_pat             = var.gh_pat,
-    mail_username      = var.mail_username,
-    mail_password      = var.mail_password,
-    mail_port          = var.mail_port,
-    mail_server        = var.mail_server,
-    mail_from_name     = var.mail_from_name,
-    mail_from          = var.mail_from,
-    amadeus_api_key    = var.amadeus_api_key,
-    amadeus_api_secret = var.amadeus_api_secret,
-    amadeus_base_url   = var.amadeus_base_url,
-    jwt_secret_key     = var.jwt_secret_key,
-    jwt_alg            = var.jwt_alg,
-  })
-
-  vpc_security_group_ids = [aws_security_group.app_server_sg.id]
-
-  tags = {
-    Name = var.instance_name
-  }
-}
-
 resource "aws_security_group" "app_server_sg" {
   name        = "aws-server-sg"
   description = "Allow inbound traffic on port 8000"
@@ -63,3 +36,33 @@ resource "aws_security_group" "app_server_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_instance" "app_server" {
+  ami                         = data.aws_ami.ubuntu.id
+  instance_type               = var.instance_type
+  user_data_replace_on_change = true
+  user_data = templatefile("./setup.sh", {
+    repo_url           = var.repo_url,
+    gh_pat             = var.gh_pat,
+    mail_username      = var.mail_username,
+    mail_password      = var.mail_password,
+    mail_port          = var.mail_port,
+    mail_server        = var.mail_server,
+    mail_from_name     = var.mail_from_name,
+    mail_from          = var.mail_from,
+    amadeus_api_key    = var.amadeus_api_key,
+    amadeus_api_secret = var.amadeus_api_secret,
+    amadeus_base_url   = var.amadeus_base_url,
+    jwt_secret_key     = var.jwt_secret_key,
+    jwt_alg            = var.jwt_alg
+  })
+
+  vpc_security_group_ids = [aws_security_group.app_server_sg.id]
+
+  tags = {
+    Name = var.instance_name
+  }
+}
+
+
+
