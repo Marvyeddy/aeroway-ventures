@@ -1,12 +1,12 @@
 provider "aws" {
-  region = "us-east-2"
+  region = "eu-north-1"
 }
 
 data "aws_ami" "ubuntu" {
   most_recent = true
 
   filter {
-    name   = "name"
+    name   = "aeroway-ventures"
     values = ["ubuntu/images/hvm-ssd-gp3/ubuntu-noble-24.04-amd64-server-*"]
   }
 
@@ -46,7 +46,7 @@ resource "aws_instance" "app_server" {
 
 resource "aws_security_group" "app_server_sg" {
   name        = "aws-server-sg"
-  description = "Allow inbound traffic on port 80"
+  description = "Allow inbound traffic on port 8000"
   vpc_id      = data.aws_vpc.default.id
 
   ingress {

@@ -10,6 +10,12 @@ variable "instance_type" {
   default     = "t3.micro"
 }
 
+variable "deploy_revision" {
+  description = "Revision used to trigger EC2 replacement when application code changes."
+  type        = string
+  default     = ""
+}
+
 variable "repo_url" {
   description = "The URL of the repository to clone."
   type        = string
