@@ -13,7 +13,7 @@ systemctl enable docker
 if [ -n "${repo_url}" ]; then
 git clone "https://${gh_pat}@github.com/${repo_url}.git"
 # heredoc
-cat << 'EOF' > aeroway-ventures/backend/.env
+cat <<EOF > aeroway-ventures/backend/.env
 MAIL_USERNAME=${mail_username}
 MAIL_PASSWORD=${mail_password}
 MAIL_PORT=${mail_port}
