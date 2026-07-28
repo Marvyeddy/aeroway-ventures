@@ -13,7 +13,7 @@ variable "instance_type" {
 variable "repo_url" {
   description = "The URL of the repository to clone."
   type        = string
-  default     = "Marvyeddy/aeroway_ventures"
+  default     = "https://github.com/Marvyeddy/aeroway_ventures.git"
 }
 
 variable "gh_pat" {
