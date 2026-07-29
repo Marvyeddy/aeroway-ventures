@@ -1,0 +1,33 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::319125696731:root"
+      },
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::aeroway-ventures-terraform-state-bucket"
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::319125696731:root"
+      },
+      "Action": ["s3:GetObject", "s3:PutObject"],
+      "Resource": [
+        "arn:aws:s3:::aeroway-ventures-terraform-state-bucket/prod/terraform.tfstate"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Principal": {
+        "AWS": "arn:aws:iam::319125696731:root"
+      },
+      "Action": ["s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
+      "Resource": [
+        "arn:aws:s3:::aeroway-ventures-terraform-state-bucket/prod/terraform.tfstate.tflock"
+      ]
+    }
+  ]
+}
