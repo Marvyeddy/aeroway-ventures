@@ -1,8 +1,14 @@
+from __future__ import annotations
+
 from datetime import datetime, timezone
+from typing import TYPE_CHECKING
 import uuid
-from sqlmodel import Column, Field, SQLModel
+from sqlmodel import Column, Field, Relationship, SQLModel
 import sqlalchemy.dialects.postgresql as pg
 import sqlalchemy as sa
+
+if TYPE_CHECKING:
+    from backend.models.notifications import Notification
 
 
 class Users(SQLModel, table=True):
@@ -34,6 +40,7 @@ class Users(SQLModel, table=True):
             server_onupdate=sa.text("now()"),
         ),
     )
+    notifications: list["Notification"] = Relationship(back_populates="user")
 
     def __repr__(self):
         return f"<User email: {self.email}>"

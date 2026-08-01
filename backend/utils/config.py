@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     AMADEUS_API_KEY: str
     AMADEUS_API_SECRET: str
     AMADEUS_BASE_URL: str
+    KAFKA_BOOTSTRAP_SERVERS: str = "kafka:29092"
 
     model_config = SettingsConfigDict(
         env_file=ENV_FILE, env_file_encoding="utf-8", extra="ignore"

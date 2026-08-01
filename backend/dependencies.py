@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import Annotated
 import uuid
 from fastapi import Cookie, Depends, HTTPException, Header, status
@@ -5,10 +6,16 @@ from sqlmodel.ext.asyncio.session import AsyncSession
 
 from backend.db.blocklist import token_in_blocklist
 from backend.db.database import get_session
+from backend.models.users import Users
 from backend.utils.security import decode_token
 from backend.services.users import UserService
 
 user_service = UserService()
+
+
+class Role(Enum):
+    ADMIN = "admin"
+    USER = "user"
 
 
 async def get_current_user(
@@ -55,3 +62,28 @@ async def get_current_user(
     user = await user_service.get_user_by_id(user_id, session)
 
     return user
+
+
+async def get_current_user_role(current_user: Users = Depends(get_current_user)):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_401_UNAUTHORIZED,
+        detail="Could not validate credentials",
+        headers={"WWW-Authenticate": "Bearer"},
+    )
+
+    if not current_user or not getattr(current_user, "role", None):
+        raise credentials_exception
+    return current_user.role
+
+
+class RoleChecker:
+    def __init__(self, allowed_roles: list[Role]):
+        self.allowed_roles = allowed_roles
+
+    def __call__(self, user_role: Role = Depends(get_current_user_role)):
+        if user_role not in self.allowed_roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail="You do not have permission to access this resource.",
+            )
+        return user_role

@@ -6,6 +6,8 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from sqlmodel import SQLModel
 from backend.utils.config import Config as cfg
+from backend.models.users import Users  # noqa: F401
+from backend.models.notifications import Notification  # noqa: F401
 
 from alembic import context
 
